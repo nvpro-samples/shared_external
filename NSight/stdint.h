@@ -46,16 +46,20 @@
 // or replace these definitions with a complete implementation,
 // such as the ones available from Google, Boost, or MSVC10.
 
-typedef            char    int8_t;
+#ifdef __unix__
+//typedef          long long  int64_t;
+typedef unsigned long long uint64_t;
+#else
+typedef            char   int8_t;
+typedef            long   int32_t;
+typedef          __int64  int64_t;
+typedef unsigned __int64 uint64_t;
+#endif
 typedef unsigned   char   uint8_t;
 
 typedef            short  int16_t;
 typedef unsigned   short uint16_t;
 
-typedef            long   int32_t;
 typedef unsigned   long  uint32_t;
-
-typedef          __int64  int64_t;
-typedef unsigned __int64 uint64_t;
 
 #endif // file guard
