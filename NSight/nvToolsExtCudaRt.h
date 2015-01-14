@@ -1,5 +1,5 @@
 /*
-* Copyright 2009-2012  NVIDIA Corporation.  All rights reserved.
+* Copyright 2012  NVIDIA Corporation.  All rights reserved.
 *
 * NOTICE TO USER:
 *
@@ -35,10 +35,11 @@
 * the above Disclaimer and U.S. Government End Users Notice.
 */
 
-#ifndef NVTOOLSEXT_CUDA_H_
-#define NVTOOLSEXT_CUDA_H_
+#ifndef NVTOOLSEXT_CUDART_H_
+#define NVTOOLSEXT_CUDART_H_
 
 #include "cuda.h"
+#include "driver_types.h"
 
 #include "nvToolsExt.h"
 
@@ -63,35 +64,13 @@ extern "C" {
  *
  * Allows the user to associate a CUDA device with a user-provided name.
  *
- * \param device - The handle of the CUDA device to name.
+ * \param device - The id of the CUDA device to name.
  * \param name   - The name of the CUDA device.
  *
  * \version \NVTX_VERSION_1
  * @{ */
-NVTX_DECLSPEC void NVTX_API nvtxNameCuDeviceA(CUdevice device, const char* name);
-NVTX_DECLSPEC void NVTX_API nvtxNameCuDeviceW(CUdevice device, const wchar_t* name);
-/** @} */
-
-/* ------------------------------------------------------------------------- */
-/** \brief Annotates a CUDA context.
- *
- * Allows the user to associate a CUDA context with a user-provided name.
- *
- * \param context - The handle of the CUDA context to name.
- * \param name    - The name of the CUDA context.
- *
- * \par Example:
- * \code
- * CUresult status = cuCtxCreate( &cuContext, 0, cuDevice );
- * if ( CUDA_SUCCESS != status )
- *     goto Error;
- * nvtxNameCuContext(cuContext, "CTX_NAME");
- * \endcode
- *
- * \version \NVTX_VERSION_1
- * @{ */
-NVTX_DECLSPEC void NVTX_API nvtxNameCuContextA(CUcontext context, const char* name);
-NVTX_DECLSPEC void NVTX_API nvtxNameCuContextW(CUcontext context, const wchar_t* name);
+NVTX_DECLSPEC void NVTX_API nvtxNameCudaDeviceA(int device, const char* name);
+NVTX_DECLSPEC void NVTX_API nvtxNameCudaDeviceW(int device, const wchar_t* name);
 /** @} */
 
 /* ------------------------------------------------------------------------- */
@@ -104,8 +83,8 @@ NVTX_DECLSPEC void NVTX_API nvtxNameCuContextW(CUcontext context, const wchar_t*
  *
  * \version \NVTX_VERSION_1
  * @{ */
-NVTX_DECLSPEC void NVTX_API nvtxNameCuStreamA(CUstream stream, const char* name);
-NVTX_DECLSPEC void NVTX_API nvtxNameCuStreamW(CUstream stream, const wchar_t* name);
+NVTX_DECLSPEC void NVTX_API nvtxNameCudaStreamA(cudaStream_t stream, const char* name);
+NVTX_DECLSPEC void NVTX_API nvtxNameCudaStreamW(cudaStream_t stream, const wchar_t* name);
 /** @} */
 
 /* ------------------------------------------------------------------------- */
@@ -118,27 +97,25 @@ NVTX_DECLSPEC void NVTX_API nvtxNameCuStreamW(CUstream stream, const wchar_t* na
  *
  * \version \NVTX_VERSION_1
  * @{ */
-NVTX_DECLSPEC void NVTX_API nvtxNameCuEventA(CUevent event, const char* name);
-NVTX_DECLSPEC void NVTX_API nvtxNameCuEventW(CUevent event, const wchar_t* name);
+NVTX_DECLSPEC void NVTX_API nvtxNameCudaEventA(cudaEvent_t event, const char* name);
+NVTX_DECLSPEC void NVTX_API nvtxNameCudaEventW(cudaEvent_t event, const wchar_t* name);
 /** @} */
 
 /** @} */ /* END RESOURCE_NAMING */
 
 /* ========================================================================= */
 #ifdef UNICODE
-  #define nvtxNameCuDevice   nvtxNameCuDeviceW
-  #define nvtxNameCuContext  nvtxNameCuContextW
-  #define nvtxNameCuStream   nvtxNameCuStreamW
-  #define nvtxNameCuEvent    nvtxNameCuEventW
+  #define nvtxNameCudaDevice nvtxNameCudaDeviceW
+  #define nvtxNameCudaStream nvtxNameCudaStreamW
+  #define nvtxNameCudaEvent  nvtxNameCudaEventW
 #else
-  #define nvtxNameCuDevice   nvtxNameCuDeviceA
-  #define nvtxNameCuContext  nvtxNameCuContextA
-  #define nvtxNameCuStream   nvtxNameCuStreamA
-  #define nvtxNameCuEvent    nvtxNameCuEventA
+  #define nvtxNameCudaDevice nvtxNameCudaDeviceA
+  #define nvtxNameCudaStream nvtxNameCudaStreamA
+  #define nvtxNameCudaEvent  nvtxNameCudaEventA
 #endif
 
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
 
-#endif /* NVTOOLSEXT_CUDA_H_ */
+#endif /* NVTOOLSEXT_CUDART_H_ */
