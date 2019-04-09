@@ -176,6 +176,20 @@ typedef CL_API_ENTRY cl_int (CL_API_CALL *clTerminateContextKHR_fn)(cl_context /
 #define CL_DEVICE_PCI_BUS_ID_NV                     0x4008
 #define CL_DEVICE_PCI_SLOT_ID_NV                    0x4009
 
+/******************************************
+* cl_nv_create_buffer extension           *
+******************************************/
+typedef cl_bitfield         cl_mem_flags_NV;
+
+CL_API_ENTRY cl_mem CL_API_CALL
+clCreateBufferNV(cl_context     context,
+               cl_mem_flags     flags,
+               cl_mem_flags_NV  flags_NV,
+               size_t           size,
+               void             *host_ptr,
+               cl_int           *errcode_ret);
+#define CL_MEM_LOCATION_HOST_NV                     (1 << 0)
+#define CL_MEM_PINNED_NV                            (1 << 1)
 
 /*********************************
 * cl_amd_device_attribute_query *
